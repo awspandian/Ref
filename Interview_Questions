@@ -1,0 +1,984 @@
+Jenkins Interview Questions
+What is the system requirements for jenkins server?
+we build a Jenkins master using the m4.large, which comes with 2 vCPUs and 8 GB of
+memory. A general purpose solid-state drive (SSD) EBS volume of 40 GB is provisioned
+and attached to the instance. We're dividing the loads within the jenkins nodes.
+What is Continuous Integration?
+What is Jenkins?
+What is the difference between Jenkins, Maven & Ant?
+What are maven components and phases ?
+What are the SCM that Jenkins supports?
+What is relation between Hudson & Jenkins?
+What are advantages of using Jenkins?
+What are plugins in Jenkins?
+Mention all the plugins you used in Jenkins and its purpose?
+How do you clone git repo in Jenkins job?
+How do you build java code with Maven in Jenkins?
+What is static code analysis and what plug-in you used for it?
+What is downstream and upstream job?
+What is workspace in Jenkins?
+Copying artefacts to another job?
+What is build pipeline?
+How to create users in Jenkins?
+How to add/remove/disconnect nodes in Jenkins?
+How to restrict Jenkins job to execute on a particular node?
+Jenkins Backup ?
+A backup ensures that your Jenkins instance can be restored in the event of data corruption or
+loss, or miss-configuration of Jenkins, which leaves it in a usable state.
+you can perform a backup by either taking a snapshot of the entire server or by backing up
+the $JENKINS_HOME directory.
+How to setup multiple Java or Maven or Git versions in Jenkins server?
+How to set Environmental Variables in Jenkins?
+How to install/update/remove Plugins in Jenkins?
+How to execute Ansible playbooks from Jenkins?
+How to pass variables to Ansible playbooks from Jenkins job?
+What is Nexus repository manager?
+How can you version and upload artefacts in Nexus repo?
+How can you deploy artefact to tomcat server from Jenkins job?
+what is Jenkins Pipeline with Jenkinsfile? Write a sample jenkins file for pipeline?
+Pipeline is basically a plug-in inside jenkins through which we can create a workflow inside
+jenkins. We have to create a job where we can control with the help of jenkinsfile which we
+can have it on code base. We can work it on based of the code revision, It is written on
+groovy scripts.
+Sample Jenkinsfile written in groovy
+pipeline {
+ agent any
+ stages {
+ stage {'Compile Stage' } {
+ steps {
+ withMaven(maven : 'maven_3_5_0') {
+sh 'mvn clean compile'
+ }
+ }
+ }
+ stage {'Testing Stage' } {
+ steps {
+ withMaven(maven : 'maven_3_5_0') {
+sh 'mvn test'
+ }
+ }
+ }
+stage {Deployment Stage' } {
+ steps {
+ withMaven(maven : 'maven_3_5_0') {
+sh 'mvn deploy'
+ }
+ }
+ }
+ }
+}
+Build id variable name?
+What is console output?
+What is build history?
+How to store credentials in Jenkins?
+How to deploy older versions of artefacts from Jenkins job?
+Name different Phases in Maven and its purpose?
+How to restart Jenkins from browser?
+How to start/stop/restart Jenkins from command line?
+What is the location of workspace of jobs in Jenkins server?
+Benefits of using Nodes in Jenkins?
+How to execute Bash script from Jenkins job?
+Have you configured Jenkins’s job? If yes, Tell me the process
+what is continuous integration why we need it?
+How your CI & CD pipelines is are configured.
+Have you worked on maven?
+How many slaves are there in your Jenkins’s? How many executable are in each slave?
+where you can store the build zip file (artefact). And how you deploy this to your
+environments?
+What does "downstream/upstream design" in software development mean?
+How to roll back the project from current version to previous versions?
+What plugins are u used in your project
+How to write custom scripts in Maven
+How to setup Jenkins server and nodes using ec2 instances
+how to deploy application by using git and Jenkins
+For java app what are the best tools which is used for CI and CD tools.-
+What problem CI solves, advantage of CI.
+Maven and Ant
+what is maven from where we get the pom.xml for the jobs.—
+Maven is a build tool.
+mvn archetype: generate
+what is pom.xml file?
+Maven and ant difference and what are the different scenario where it is used----
+Difference between Ant and Maven ?
+- Ant and Maven both are build tools provided by Apache. The main purpose of these
+technologies is to ease the build process of a project. Ant doesn't has formal conventions, so
+we need to provide information of the project structure in
+build.xml file.
+What is ant and from where we get the build.xml for the jobs ?
+how pom.xml will read the variables which we use in the Jenkins like version ?
+- By invoking maven
+what is dependency in pom.xml ?
+- POM inheritance
+Invoke maven task is there in post build option.
+are we in admin part of Jenkins, like installation of Jenkins ?
+---- yes
+different ways to install a plugin's in Jenkins
+- using manage plugins
+how you created jobs in Jenkins other than the GUI like new item option.. Other option is job
+dsl. ---- using Jenkins API
+Why Jenkins is required if we can do the same thing with script like automatic. - Continuous
+Integration and its plugin feature.
+How many jobs are there in Jenkins (for eg – ant, maven)
+- ant is default, Maven you have to install,
+yum install Jenkins will run on which server ? - Master server.
+How do you do a deployment? - Using shell scripts
+are you doing the deployment in an application server - yes.
+What is sonarqube and How to integrate sonar qube with Jenkins - code metrics?
+Main reason of using Jenkins - CI.
+Commands to start Jenkins manually through command prompts like how to up the server -
+service Jenkins start.
+How to Safe restart the Jenkins - Restart when no jobs are running.
+How to create a backup in Jenkins, what is the plug in name complete process. From which
+directory it will take the back up ( Jenkins_home) directory. - Backup Plugin.
+Step to setup a Jenkins and how to create a new job - New item-> Freestyle.
+How to deploy a Custom build in Jenkins - using build tools such as ant and maven.
+Where we store the artefacts which gets generated from Jenkins - local/ target folder or in
+nexus repo.
+How to bypass the Github like directly using the code and put it in Jenkins
+--- t
+Jenkins used an enterprise or an open source ---open source.
+Different Plugin used in Jenkins ---build pipeline, backup, git.
+How to change port for jenkins service when 8080 is being used , what is the command to
+change jenkins port ?
+If your /etc/init.d/jenkins file fails to start Jenkins, edit the /etc/default/jenkins to replace the
+line ----HTTP_PORT=8080---- with ----HTTP_PORT=8081---- Here, "8081" was chosen but
+you can put another port available
+when you run job from master where will be the workspace actual data (workspace) save is in
+master or in the slave? Answer - Slave
+/etc/init.d/jenkins ---- Jenkins as a daemon
+/var/log/jenkins/jenkins.log ---- Check this file if you are troubleshooting Jenkins.
+/etc/default/jenkins ---- jenkins port
+cd /var/lib/Jenkins ------------- Jenkins home directory
+id jenkins ----------- Shows the user for Jenkins
+Always set an elastic IP for Jenkins server
+Every job has its own id
+Build information ---- GET http://jenkins_srv:8080/queue/api/json?pretty=true
+We can configure web hooks through jenkins url, so whenever there is some commits
+changes in github it will point to your jenkins server and the builds automatically get
+triggered.
+Jenkins is internal tool if u want to access it from outside upload the ssl certificates
+A more comprehensive Jenkins pipeline might be broken down even further into
+something like this:
+ Pull from GitHub using the Jenkins Git plug-in.
+ Compile the application using the Jenkins Maven plug-in.
+ Ensure developers are complying with coding standards by using the Jenkins
+Checkstyle Plugin.
+ Calculate McCabe cyclomatic complexity, and using that data, calculate unit test
+coverage. The JaCoCo plug-in is often used to perform code coverage
+calculations.
+ Check for bugs and potential security flaws with static code analysis tools, such
+as SonarQube, PMD or FindBugs.
+ Obtain manual sign-off by the user acceptance team by including a Groovy
+script in the Jenkins pipeline.
+ Run stress tests, and measure the application's performance under load.
+ Package the application in a format suitable for deployment. This is often a
+WAR file for web apps, an EAR file for enterprise Java apps or an executable
+JAR file for Docker-based microservices.
+ Deploy the application to a Maven repository, such as Nexus or Artifactory.
+ Archive all of the generated reports for future reference.
+Linux Interview questions
+1. script/command to delete last word from every line in a file
+awk '{gsub("[a-zA-Z0-9]*$", "");print}' <filename>
+To replace last word with hello in every line
+awk '{gsub("[a-zA-Z0-9]*", "hello");print}' <filename>
+2.script/command to find the files with more than 1gb size
+find <path for directory> -size +1G -type f
+3. What is Swap Space?
+4. What is the maximum length for a file name in Linux?
+5. Which partition stores the system configuration files in Linux system?
+6. Which command is used to uncompress gzip files?
+7. What is the difference between soft and hard mounting points?
+8. What are the file permissions in Linux?
+9. More questions are from sed, find and awk .
+10. How to check Memory stats and CPU stats as a Linux admin?
+11. How to reduce or shrink the size of LVM partition?
+12. How can you enhance the security of password file?
+13. What is the difference between Cron and Anacron?
+14. What command is used to check the number of files, disk space and each user’s
+defined quota?
+15. How can you manage memory in linux machines?
+16. 18. What is the name and path of the main system log?
+17. How to manage logical volumes?
+18. Explain /proc file system?
+19. What are the fields in the/etc/passwd file?
+20. How do you terminate an ongoing process?
+21. How can you know the execution time of a command?
+22. How can you append one file to another in Linux?
+23. How you can run a Linux program in the background simultaneously when you
+start your Linux Server?
+Git Interview Questions
+1. What is Version control system or Source code manager?
+2. Benefits of VCS or SCM?
+3. What is Git and what is a repository in GIT?
+4. Difference between Git and SVN?
+5. Two types of git authentication?
+6. Branches in Git and its purpose?
+What is the common branching pattern in GIT?
+7. What is Pull requests?
+8. How to install git in Linux & Windows?
+9. How to setup repository though command line?
+10. How to setup repository in github and clone it?
+11. What is git clone command used for?
+12. What is git config command user for?
+13. Git config data is stored in what location?
+14. Git config global and local files?
+15. Content of git config file?
+16. Git add command’s purpose?
+17. How to remove/rename files in local git repo?
+18. git commit command’s purpose?
+19. How to sync local git repo data with github?
+20. git fetch?
+21. git merge?
+22. git pull?
+23. How to change branches in local git repo?
+24. What is the difference between ‘git remote’ and ‘git clone’?
+25. git status?
+26. What is the function of ‘git rm’?
+27. What is the function of ‘git checkout’ in git?
+28. What is the use of ‘git log’?
+29. Explain what is commit message?
+30. How to setup GitHub ssh authentication?
+31. What is git webhooks?
+33. Tell me the branching strategies you followed for your project?
+34. What is git rebase?
+35. What is git stash?
+36. What is the difference between git pull and git fetch?
+37. Difference between git and svn?
+38. Advantages of git compare with svn?
+39. Explain about staging area in git?
+40. How do you check after git merge …where merging is correctly or not?
+41. How to create branch and delete a branch?
+42. Do you get any conflicts while merging? How can u resolve conflicts?
+43. How can u implement authentication and authorization in git?
+44. What is the difference between git rebase and git merge?
+45. How to merge the code?
+46. Pull request in git hub - ---git pull
+47. Forking a repository in git hub?
+48. Diff between svn and git ---svn is centralized version control and git is Distributed
+Version Control.?
+49. What is forking in git repositories?
+50. Explain about soft and hard reset and their difference?
+51. What kind of branching and merging you worked on GIT.
+52. With this kind of environment and the git release branching, does it work in agile
+methodology?
+53. What is tagging in GIT and what is the diff between feature branching and tagging?
+Docker with Kubernetes Interview questions
+1. Current roles & responsibilities?
+2. What is Docker compose?
+3. What is Docker server version?
+4. What are the advantages of Docker?
+5. How do you setup Docker in Jenkins in production environment?
+6. How do create Docker image from Docker file?
+7. How do you deploy the Docker image generated in the testing environment to
+production environment in Jenkins?
+8. What is Docker data centre?
+9. What is Docker hub & uses?
+10. What are the types of Docker networks?
+11. How do you define network in the Docker compose file?
+12. What are the basic parameters required in the Docker compose file?
+13. What is Docker interlock?
+14. What is overlay networking?
+15. How to communicate between 2 containers present in separate network?
+16. How to store the data present in the Docker container in the AWS?
+17. If we define the Docker volume in the docker compose file is it possible to share
+data with the EFS, NFS?
+18. Difference between image and container
+19. How to run containers
+20. Why we need to mention dual ports(8080:8080) in docker run command
+21. .Difference between Copy and Add
+22.How to write a docker file to deploy a war file
+i. We have private repository and don’t have base images .how can deploy a war file?
+ii. Write a simple docker file to deploy a war file by using base images?
+23. Difference between docker compose and docker swarm
+24. Why we need to use docker compose?
+25. Tell me about Docker Network.
+why we are using docker difference between vm?
+What is docker cloud & how it is different from docker hub what is the features over docker
+hub?
+What is the difference between docker cloud and docker swarm?
+Name the docker components and its workflow ?
+work of docker engine ?
+How to list down one month ago created container ?
+docker swarm & kubernetes differences and comparisons ?
+How to remove old Docker containers
+How can I get the size of a Docker image?
+How you will link when the docker containers is in different virtual machine is there Any
+configuration in docker compose file or any command or any variable?
+What is kubernetes?
+What is the difference between kubectl & kops?
+ Why you are using kubectl can you explain why we are using?
+ Why we using kops?
+what you will do if one master got corrupted, can we create multiple masters?
+what you will do in case any pod deleted?
+what is namespaces in kubernetes can you tell me some?
+Can you tell me some commands using in kubernetes?
+Tell me the command to create cluster?
+Difference between rc and rs?
+How to attach a volume in cluster at some time the container will be deleted then rs will
+recreate new container then how to attach that container automatically and how to restore the
+volume automatically to re-created container?
+How many projects you used kubernetes?
+ N number of docker containers deployed to different vms how will you manage there is no
+kubernetes installed?
+ If installed kubernetes how you will deploy this containers into kubernetes cluster? Can you
+tell me the command for creating kubernetes cluster in vm?
+how many nodes we required to create kubernetes cluster?
+We have nearly 15 nodes in my organization all are decentralized so which node I need to
+create as a master?
+Is there any possibility to make all the machines as masters?
+Our applications are decentralized I don’t want distributed environment if anything happens
+to the master all will collapse, can we create multiple masters?
+What is the difference between kubectl and minikube?
+If any container down in my cluster how you will rectify?
+Scripting
+How can I print shell script name?
+Echo $0
+How to write a script when the first command is executed then execute the below script?
+Java --version
+If [ $? –eq 0]
+Then
+Echo “print the variable”
+Else
+Echo “print the variable”
+fi
+How to print the exact file name by using command?
+First assign path as a variable
+awk -F '/' '{print $(NF-1)}' <<< "$a"
+Can you tell me the syntax for for loop and while loop?
+How to dictionary in python?
+Dict={a:10,b:10}
+How to add another variable c, with key 10 to the above dictionary?
+How to replace existing dictionary?
+Dict=[c:10]
+How to print shell name?
+How to assign a all the arguments to a single variable?
+How to print the current process id of current shell?
+How to know the file that is entering randomly to my script?
+How to divide two variables in shell script?
+what is trap?
+What is shift in shell script?
+How to run our script in background?
+How to know the running back ground process id ?
+What is $*, $$ and $@?
+How to print only directories?
+How to print the directory only started with number?
+How to grep two strings at a time?
+How to grep a string that is started with some string and ends with some string like
+a…..b ?
+How to print string that starts with a?
+Did you worked on arrays?
+How will you give access of your script to a particular user?
+How to access background running scripts and their pid?
+How to run our script in foreground?
+AWS interview Questions
+1. What is AWS?
+2. What is IAM and its purpose?
+3. What are policies in IAM?
+4. How to setup MFA?
+5. Two types of access for IAM user?
+6. What is EC2 service used for?
+7. Name few types of EC2 instances?
+8. Diff between T2 series and C series on Ec2 instances?
+9. What are AMI’s?
+10. What is AWS marketplace, what are community AMI’s?
+11. How can you create your own AMI?
+12. Enable termination protection option is for what?
+13. What is EBS?
+14. What are different types of Volumes?
+15. Can we create volume in one zone and attach it to a instance in the other zone?
+16. How to take backups of EBS volume?
+17. How to restore lost/corrupted volumes in from snapshots?
+18. How to transfer volume from one zone to other zone?
+19. How to resize EBS volumes.
+20. Modify volume feature from AWS?
+https://aws.amazon.com/blogs/aws/amazon-ebs-update-new-elastic-volumeschangeeverything/
+21. What are security groups?
+22. Can we attach a Security group to multiple instances?
+23. What is diff between inbound and outbound rules in SG?
+24. What are Elastic IP’s and how is it different from normal Public IP assigned to a EC2
+instance?
+25. What are Key pairs?
+26. What is ELB?
+27. What are target groups?
+28. What are health check settings in target group?
+29. Describe advanced health check settings from Target groups?
+30. Difference between internet facing and internal ELB?
+31. What is VPC?
+32. What is default VPC?
+33. Can we create default VPC?
+34. What is DNS hostnames option used for in VPC?
+35. What are Subnets in VPC?
+36. What is difference between Private and Public subnet?
+37. How can you design a highly available network in VPC?
+38. What are Internet Gateways?
+39. What are Nat gateways?
+40. What are Route tables?
+41. What are NACL?
+42. What is VPC Peering?
+43. What is RDS?
+44. What are different DB software’s (Engines) supported by RDS?
+45. Different DB instance types?
+46. What is Multi AZ RDS instances?
+47. Different storage types in RDS?
+48. What is backup retention policy?
+49. What is auto scaling? What triggers have you used for scaling?
+50 .What is s3cmd used for?
+51. What is AWS CLI used for? Give any real time scenario where you used AWS CLI?
+52. How can we mount s3bucket in Linux instance as a mount point? Any real time use case
+for it?
+53. Please explain the procedure for setting up a alarm with Cloud Watch monitoring?
+54. What is AWS Beanstalk? Name any platform you used in beanstalk and the code
+deployment procedure for it?
+55. Name few customization options available with Beanstalk?
+56. What is Launch configuration in Auto scaling?
+57. What is Route 53 used for, name few features of route 53?
+58. Difference between AWS Region and Zone?
+59. How will you identify which one is public subnet & private subnet in VPC
+60.Is Amazon EBS storage is NAC/SAN storage?
+61. What are services available to connect your premise data centre to AWS cloud?
+62. Can AWS EC2 access s3 bucket without access key?
+63. I want deploy containers but have storage persistent problems in AWS and in
+Docker?
+64. How are you using AWS in your project/company?
+65. Difference between IAM Roles & Policies?
+66. Describe your AWS Architecture in your company?
+67. What is RDS what is the work you have done in RDS?
+68. What is cloud formation?
+69. What is CDN?
+70. I have pdf files in an instance and they are eating away the space. I need these files,
+what is solution do you provide for accessing these files?
+71. What is route 53? How do you configure it? And link it to ELB?
+72. What are private subnets? What is it needs?
+73. What is the need for having your application or instances in private subnets when you
+have public domain through route 53?
+74. Why we need to use Glacier?
+75. Tell me S3 reduced redundancy vs. infrequent access?
+76. Tell me S3 Bucket level permissions?
+ebs or s3 which one is faster
+Draw vpc architecture
+How you interconnect aws services for basic application?
+What if you lost the .pem key , how you can you access the instance ?
+Ansible Interview Questions
+1. What is inventory file used for and default inventory host location?
+2. What is Ansible configuration file used for and its default path?
+3. Do you write your inventory file?
+4. How many types of variables and precedence?
+5. Write the command to find the python version on nodes?
+6. What is the file structure of Ansible roles?
+7. What happen when one node or instance is unreachable?
+8. What happen when one task is failed in playbook?
+9. I have 20 servers, I want to install one package in 5 servers and other package in next 5
+servers. Like that how to write in Ansible script for that…Explain?
+10. What is the architecture of Ansible?
+11. How do I supply variables while executing the playbook in Ansible?
+12. Explain about the tags in Ansible?
+13. How to execute failure playbook again?
+14. How is Ansible different than any other configuration management tool?
+15. Ansible playbooks are written in what format?
+16. What is a module in Ansible?
+17. What is inventory used for in Ansible?
+18. Name three places where Ansible variables can be stored?
+19. What connection Ansible establishes with Linux and windows node.
+20. Difference between Remote and local execution in Ansible.
+21. What is the purpose and location of Ansible.cfg file?
+22. Name any two settings from Ansible.cfg file.
+23. Please write below a sample inventory file with host, group & group of groups’ syntax in
+it.
+24. What is the difference between group vars & host vars directory?
+25. What are adhocs commands used for & write below syntax of a adhocs command?
+26. Write below ad hoc command to gather fact variables on all the hosts from the inventory
+file?
+27. What format does Ansible ad hoc command returns the output?
+28. Name three types of modules in Ansible?
+29. Name any 10 modules in Ansible that you have used.
+30. How to list all the Ansible core modules from command line.
+31. How to display all the options/attributes for apt module from command line.
+32. How can you check mandatory option for any module from command line?
+33. What is setup module used for?
+34. Write down sample global play declaration
+35. Write down any two tasks from playbook with its proper format and names.
+36. What is the difference between sudo and become module and its purpose.
+37. Write down playbook syntax of starting ntp service on webserver and dbservers host
+group at once.
+38. How to take user input from a playbook?
+39. What is debug module used for in playbooks?
+40. How to store output of any task into a variable from playbook?
+41. What are handlers used for in Ansible and how is it different from tasks?
+42. Conditional execution in Ansible is used for what purpose and write down its syntax with
+small description?
+43. What are templates used for and its format?
+44. What are Ansible roles and its purpose?
+45. Command to generate Ansible roles directory structure.
+46. Name 5 directories from Ansible roles.
+47. What is {{ }} symbol used for in Ansible.
+48. Write down all the places where we can define variables according to its precedence.
+49. Write down syntax of dictionary variable?
+TRUE or FALSE
+50. Setup module gets executed after executing any ad hoc command.
+True or False
+51. Ansible playbooks are written in XML format.
+True or False
+52. Ansible.cfg file is list of plays.
+True or False
+53. Fact variables is generated by Ansible and we do not need to create fact variables.
+True or False
+54. Ansible is written in Python language.
+True or False
+55. Ansible works on Master and client relationship, where Ansible control server package is
+installed on master and Ansible client package is installed on all the clients.
+True or False
+56. Ansible loop module is with items.
+True or False
+57. All the templates in Ansible roles has to be defined in main.yml file inside templates
+directory.
+True or False
+58. All the roles uploaded in Ansible galaxy website is written and owned by Ansible Inc.
+(organization).
+True or False
+59. Ansible can only get installed on Linux machine but can manage Linux and windows
+nodes.
+True or False
+60. Write an Ansible task that can copy the file to remote location with the ownership of
+JBoss?
+61. What is local action in Ansible?
+62. What are the roles in Ansible?
+63. Write a playbook for installation of apache in Ubuntu and centos?
+64. How to create a role in Ansible?
+65. Different types of inventories in Ansible?
+66. If we want system information of machine how we will get the data with Ansible like we
+use factor in puppet?
+67. In which language we write playbooks in Ansible?
+68. Activity that we use with Ansible or advantage Functionality or purpose of Ansible using
+in your project?
+69. How to launch an LDAP server using Ansible?
+70. How Ansible works... And what are the playbook written other than the basic playbooks?
+71. For example there are 4 aps server running and 4 webservers running and we have a new
+code change and this change should automatically copy to these different servers using
+Ansible, how I will come to know new code is generated.
+Use Jenkins with POLL SCM option and after artefact is generated using Ansible to pushing
+copy module.
+72. Have u done any automation like app goes down then for self-healing of the app kind of
+the thing.
+73 .Have u written any playbook. Explain it
+74. What is a dynamic inventory in Ansible?
+75. How can you manage cloud services with Ansible?
+76. How can you protect sensitive information in Ansible?
+77. How can you save the output of module execution in Ansible?
+78. How can you manage error handling?
+79. What are conditionals in Ansible?
+80. Write a playbook to create AMI on AWS?
+81. How can you the fact variables in Ansible?
+82. Can we create an Ansible module?
+83. How can you do provisioning with Ansible?
+84. BASH Vs. Python vs. Configuration Management Tools?
+85. How can you update a single table in a Database with Ansible?
+1. How can you do provisioning with Ansible?
+2. How can you protect sensitive data on Ansible?
+3. BASH Vs. Python Vs. Configuration Management Tools?
+4. How can you update a single table in a Database with Ansible?
+5. How would you take a backup of a MySQL database? *
+Frequently Questions
+1. What is chef work flow?
+2. How we get the properties of node
+3. What is resources?
+4. What is diff b/w chef server and chef client?
+5. What is run list?
+6. What is diff b/w cookbook and recipe?
+7. How bootstrap will work & what is process
+8. Which language chef deploy?
+9. How do you increase RAM for a EC2 instance?
+10. How do you maintain DR in a cloud?
+11. How do you configure SSL in Tomcat?
+1) Tell me your roles and responsibilities?
+2) What is python-boto?
+3) Are you using private cloud?
+4) How to create the aws instances using configuration tools?
+5) Asking on modules?
+6) ci/cd work flow?
+7) Asking about plugins in Jenkins?
+8) Explain Ansible playbook?
+9) How to deploy the artefacts?
+10) How to build the artefacts?
+11) Git fetch?
+12) Git pull?
+13)Write a playbook using loops?
+1. How to setup Jenkins server and nodes using ec2 instances
+2. about maven, ant, sonar
+3. How to deploy application by using git and Jenkins
+4. How to create docker image
+5. How is docker different from vagrant?
+6. about Ansible modules
+7. About git fetch and git pull
+8. How your present company help in your career?
+1. Tell me about yourself briefly?
+2. Roles and Responsibilities
+3. How to create virtual host in apache
+4. Versions (like Ansible, git, MySQL,)
+5. Write a playbook for installation of apache in Ubuntu and centos
+6. Document root of apache and tomcat
+7. What is the configuration file in tomcat?
+8. Defaults port numbers (apache, tomcat, MySQL)
+9. How to connect client and server (windows to Linux)
+10. What is SSH?
+11. What is Docker file commands?
+12. How to create a link between two containers
+13. How to port forward in Dockerfile
+14. Difference between small 'p' and capital 'P'(Docker)
+15. How to create a job in Jenkins
+16. What plugins are u used in your project?
+17. How to create a role in Ansible
+18. What are challenges you are faced
+19. Are u faced performance issue
+20. How to launch an instance from AWS
+21. How to merge the code
+22. How to write custom scripts in Maven
+23. How to find a specific line in a file
+24. Are u involved in Shell Scripts?
+25. How to configure yaml file in vagrant file
+Python Use Cases
+Problem 1: Monitor web server logs and send out an email (or notification) when 500’s or
+400’s appear more than 10 times in last 10 minutes.
+Solution: Write a python script to parse the web server logs and keep a count of status codes.
+Set a cronjob or run this script as a daemon.
+Problem 2: MySQL server is throwing too many connections.
+Solution: Write a python script that connects to MySQL and parses `show process list` to find
+the number of connections per user per host. Send an email with this information to team.
+This can again be a cronjob on the MySQL server itself or any server which can connect to
+MySQL.
+Problem 3: We need to monitor uptime for our website.
+Solution: Write a script in python that pings your website and looks for a 200. If you don’t
+get 200 send out an email to team. You can set a cronjob on multiple servers (except the
+server hosting your website).
+Problem 4: Deployments on Staging are a mess.
+Solution: Write an application in Flask with a minimal UI that allows developer to select a
+service and the branch to be deployed. Behind the scenes you could use simple git commands
+to fetch the code and restart the service.
+DevOps Interview Questions
+DevOps Basic
+1. What is DevOps and what is the need for it?
+2. What is Agile?
+3. How did Cloud computing helped the DevOps movement?
+4. What is the DevOps adoption rate in 2019?
+5. Is DevOps and Automation same thing? Please justify either of your answer.
+6. Draw a DevOps lifecycle below.
+7. What is Continuous integration?
+8. What is ContinuousDelivery and Continuous Deployment?
+9. What are DevOps Engineers main objectives/roles/responsibilities?
+10. What is Infrastructure As A Code?
+11. Can we do DevOps without cloud computing? Please justify your answer?
+12. Name some tools used in DevOps?
+13. Name the job roles in Agile/Scrum and their responsibilities?
+14. What is the meaning of backlog in scrum?
+15. What are user stories?
+16. What is a sprint and its duration?
+17. Please define planning meeting, daily scrum meeting and retrospective meetings in one
+line.
+18. What is the difference between Linux and UNIX? Name some Unix and Linux OS below.
+19. What is a root user and its home directory path, state the difference between “ / ” and “
+/root “ directory?
+20. What does /etc, /bin, /sbin and /boot directories contains?
+Software Delivery cycle ?
+What is Continuous Integration?
+What CI tools have you used? Example: Travis-CI.
+What is Continuous Delivery and why is it important?
+What is Continuous Deployment?
+Explain the importance of A/B testing and how it relates to software delivery? What are your
+favourite deployment techniques and why? Examples include: 0 downtime, Canary, or
+Blue/Green deployments.
+Explain a time when a software release has gone poorly
+How can you reduce the time to test and Deploy code?
+Source Control
+What types of source control programs are you comfortable with?
+What are the benefits of using source control?
+Describe some branching strategies that you have used?
+Give an example of a good commit message?
+Testing
+Talk about different types of automated testing you have implemented?
+What is the importance of software testing?
+What testing paradigms do you use, if any?
+Explain the difference between unit and end to end testing?
+Have you used any testing frameworks? If so, which ones?
+Architecture
+Explain what a Restful architecture is?
+How would you scale a slow website?
+Your application just got millions of users overnight, what do you do?
+What are some ways to increase client-side performance?
+Can you explain the significance of a primary/replica database architecture?
+What are some caching strategies you can implement to increase performance?
+What are the advantages and disadvantages of implementing a Micro services architecture?
+What is the difference between vertical and horizontal scalability?
+Explain kubernetes architecture ?
+Database
+What is the difference between a relational and non-relational database?
+When do we optimize the database?
+Can you give some ways to optimize the performance of a database?
+What does A.C.I.D mean?
+How can you customize the query plan to increase throughput?
+Explain how you would do Database Continuous Delivery?
+Linux
+How can you view running processes?
+How do you check server uptime?
+How do you start/stop services?
+How do you display the shell’s environment variables?
+What does #!/bin/bash at the top of a script do?
+What does "&" after a command do?
+What does piping commands mean?
+What distributions have you used on servers? Why?
+1. What would you do if you got a low disk warning? *
+2. Your site goes down nearly every hour on the hour. What do you look at to diagnose
+this? *
+3. Your application just got millions of users overnight, what do you do? *
+4. How do you manage security updates? *
+5. What are some caching strategies you can implement to increase performance? *
+6. Describe the most challenging situation that you have faced. How did you fix it? *
+7. What is truncating files?
+8. How can you perform roll back operations when the deployments fails?
+9. What are start-up scripts and how you enable start up scripts in Ubuntu?
+Security
+What is the importance of SSL?
+What is a SQL injection?
+What is cross-site scripting (XSS)?
+Why shouldn’t you roll your own crypto?
+How are passwords stored on databases?
+What is a Man-in-the-middle attack?
+How do you safely manage environment variables in a cloud environment?
+How do you manage security updates?
+How do you keep encryption keys and credentials secure but make them available to
+machines that need them?
+Cloud
+Which cloud providers are you familiar with?
+What are the benefits of using a cloud provider?
+Have you managed production systems in the past?
+Configuration Management
+Which Configuration Management tools are you most comfortable with? Examples include:
+Chef, Salt, Puppet, or Ansible?
+Container Concept
+How does Docker improve scalability, distributed computing, and efficiency vs. traditional
+cloud virtual machines?
+List some Docker use cases
+Networking
+What is the difference between a vlan and subnet?
+What is a broadcast domain?
+What is the difference between icmp, tcp and udp?
+Explain how a tcp session is set up?
+How are tcp options negotiated and selected?
+How would you use tcpdump to determine if one remote host was making a connection to
+your server?
+General
+Which Software Stack do you use and why?
+Describe your worst Fear?
+What new technology would you like to learn?
+Have you worked on any side projects?
+Do you contribute to any open source projects?
+What are the critical problems you faced and how did you resolved it?
+Web Servers
+1. How do you tune NGINX performance?
+2. How can you create multiple tomcat servers from a single binary file?
+3. What is refresh time for the tomcat server?
+4. How to make connection to tomcat server from apache server?
+5. Different Mechanisms in apache/Nginx?
+6. Proxy and Reverse Proxy?
+7. What is http protocol?
+8. MPM module?
+9. Tell me the process to set up ssl certificate for your application?
+10. What is max clients in apache configuration?
+11. What are the modules you used in apache/Nginx?
+12. Have you ever used mpm modules in apache and what is their purpose?
+13. What is virtual hosting?
+14. Prefork, Worker and event MPM?
+Fresher Questions asked by Infosys
+pm -qa -- to list installed package on rhel/centos
+yum list installed ------ to list installed package on rhel/centos
+gg -- cmd used for go to 1st line of vim editor
+how do you replace a string abc in a text file with xyz using terminal ------> sed -i -e
+'s/abc/XYZ/g' /tmp/file.txt
+A runlevel is a preset operating state on a Unix-like operating system.
+0 - System halt; no activity, the system can be safely powered down.
+1 - Single user; rarely used.
+2 - Multiple users, no NFS (network filesystem); also used rarely.
+3 - Multiple users, command line (i.e., all-text mode) interface; the standard runlevel for most
+Linux-based server hardware.
+4 - User-definable
+5 - Multiple users, GUI (graphical user interface); the standard runlevel for most Linux-based
+desktop systems.
+6 - Reboot; used when restarting the system.
+By default Linux boots either to runlevel 3 or to runlevel 5. The former permits the system to
+run all services except for a GUI. The latter allows all services including a GUI.
+How to Check Previous Day Memory and CPU Usage?
+nmon
+How do I install a .tar.gz (or .tar.bz2) file?
+The first thing you need to do is extract the files from inside the tar archive to a folder. Let's
+copy the files to your desktop.
+You can extract an archive by right-clicking the archive file's icon inside your file browser 
+and pressing the appropriate entry in the context menu.
+Extracting the archive should create a new folder with a similar name. e.g. program-1.2.3.
+Now you need to open your terminal and navigate to that directory using the following
+command:
+cd /home/yourusername/Desktop/program-1.2.3
+Make sure you read a file called INSTALL, INSTALL.txt, README, or something similar if
+one was extracted.
+You can check if such a file exists from the terminal by using the ls command. The file can
+be opened and read with the command:
+xdg-open INSTALL
+Where INSTALL is the name of your file. This file will contain the right steps to follow to
+continue the installation process. Usually, the three "classical" steps are:
+./configure
+make
+sudo make install
+You may also need to install some dependencies if, for example, running configure prompted
+you with an error listing which dependencies you are missing.
+You can also use checkinstall instead of make install. See here
+https://help.ubuntu.com/community/CheckInstall
+Remember that your mileage may vary.
+Diff between yum and rpm
+1.RPM is a package manager while YUM is a frontend that can be used with RPM.
+2. The RPM package manager is unable to track dependencies while YUM can.
+how to add an Existing User Account to a Group
+usermod -a -G examplegroup exampleusername
+what are difference coloumns in /etc/passwd file
+The /etc/passwd file is a colon-separated file that contains the following information:
+User name
+Encrypted password
+User ID number (UID)
+User's group ID number (GID)
+Full name of the user (GECOS)
+User home directory
+Login shell
+vi /etc/passwd file
+tom:x:1000:1000:AB Gite:/home/ab:/bin/bash
+how to disable user in redhat
+usermod -L -e 1 ab
+ipa user-disable ab
+Which command is used to record a user login session in a file?
+macro
+read
+script ----- is the Answer
+record
+sessionrecord
+which aws storage service is recommended to store huge amount of data
+S3
+how do i enable auto archive to glacier from s3 when data is 3 months old
+you can create a lifecycle rule in which you specify the initial transition action to
+STANDARD_IA (or ONEZONE_IA) storage,
+another transition action to GLACIER storage for archiving, and an expiration action. As you
+move the objects from one storage class to another, you save on storage cost.
+https://docs.aws.amazon.com/AmazonS3/latest/dev/lifecycle-transition-generalconsiderations.html
+If i delete an object in s3 how do i recover the deleted files
+Once deleted, there is no method to restore or undelete an object.
+If you have versioning enable, yes you can! On a versioned bucket, a delete action on a file
+does not really delete it but it adds a version with a "Delete Marker".
+You can delete the delete marker with the AWS CLI:
+aws s3api delete-object --bucket yourbucket-name --key "yourfile" --version-id
+id_of_the_delete_marker
+You can get all the files in the bucket with
+aws --output text s3api list-object-versions --bucket yourbucket-name > files.txt
+If you want to undelete all the files in the bucket you can try:
+echo '#!/bin/bash' > undeleteScript.sh && aws --output text s3api list-object-versions
+--bucket yourbucket-name | grep -E "^DELETEMARKERS" | awk '{FS = "[\t]+"; print "aws
+s3api delete-object --bucket yourbucket-name --key \42"$3"\42 --version-id "$5";"}' >>
+undeleteScript.sh && . undeleteScript.sh; rm -f undeleteScript.sh;
+what is object store in aws
+AWS Storage Gateway provides you a physical or virtual appliance to use on-premises to
+easily move volumes or files into the AWS Cloud.
+Once you have your data on Amazon S3 & Amazon Glacier, you have the most complete set
+of storage management and administration capabilities available in the cloud.
+Difference between ebs and s3 and efs
+Amazon S3 is an object storage and is suitable for storing user files and backups in massive
+numbers.
+Amazon EFS was designed to provide scalable storage for the users of Amazon EC2 cloud
+computing service.
+Amazon EBS was also created to enhance the functionality of Amazon EC2 - it is similar to
+your computer's drive but in a virtualized environment.
+Difference between on demand, reserved and spot instances
+Once you get the on-demand instance you keep it until you terminate it. In this pricing model,
+you pay the most because you can leave at any time.
+With reserved instances, you get the same instance hardware, but you pay less.
+You make some form of commitment at the beginning, and then you get to pay for the
+instance at a discounted rate.
+With spot, AWS does not commit to you. With this kicker model, the pricing becomes
+extremely attractive. We’re talking about a 60% to 90% savings.
+That’s not just me being overly optimistic. I’ve seen these savings realized repeatedly.
+AWS Bill / On-Demand Reserved (40% savings) Spot (80% savings)
+$5,000/mo $3,000/mo ($2,000/mo) $1,000/mo ($4,000/mo)
+Difference between classic load balancer and application load balancer
+The Classic Load Balancer operates on both the request and connection levels. However, it
+doesn't support features like host and path based routing.
+This is the first load balancer that AWS introduced in 2009 so it is missing some features.
+The Application Load Balancer was introduced to address this.
+A Classic Load Balancer is recommended only for EC2 Classic instances.
+The Application Load Balancer operates at the request level only. If you're dealing with
+HTTP requests, which you are for your web application, you can use this.
+It supports the basic feature of distributing requests using the round robin algorithm. It also 
+supports advanced features like host and path based routing.
+multiple files search in bash shell?
+can we use ansible without using playbook?
+ansible command for copying a file and paste to your client?
+docker components?
+1.What are lower environments in Jenkins?
+1. Lower environment is just like production environment, it will be in the same network as
+production but it will be smaller compared to production data.
+It will have same, network, security, similar data etc etc. The only difference is that its non
+prod and will be little smaller.
+The idea is to test the upgrade in lower environment before it goes to production.
+If the deployment or any change work in lower environment there are high chances that it
+will work in production as well.
+2.what is jenkins file?
+2. Jenkinsfile is a groovy script written to create Jenkins pipeline automatically.
+So instead to of we create all the jobs manually and connect then to create pipeline,
+jenkinsfile can do this automatically and you can put it in your source code.
+In Jenkins ,with out using version control system tools, how the code will pull into Jenkins
+and how you will build?
+If you really want to build from an existing checkout somewhere on the file system, then do
+not use "Source Code Management" section of Jenkins. Leave it as "none"
+Go straight to the "Build" section
+Click "Add Build Step"
+Select Invoke Ant"
+Click Advanced
+And under "Build File", provide a full path to the ant build file on your file system. You
+would have to include the drive letter (if on Windows) or a leading /
+(if on Linux) to break from the Workspace (by default, this path is relative to Workspace). Or
+use a lot of ../../../.. if needed.
+But like others have said, this is not the way a CI system is supposed to be used
+change the hostname in Linux ------ edit /etc/hostname
+Some High-level Scenarios
+1. How do you explain in business perspective about Dev-Ops Culture, IT Automation,
+Dev-Ops Lifecycle to the customer.
+2. How do you implement Dev-Ops in real-time environment.
+3. Explain Dev-Ops Tools and how do you used in your project.
+4. Explain in business perspective about Dev-ops tools as step-by-step process to the
+customer.
+5. Explain any one source code management tool (Git or SVN or CVS) and what is the
+purpose.
+6. Explain any one continuous integration tool (Jenkins or Teamcity or Bamboo) and
+what is the purpose.
+7. Explain about the deployment process using web server (Apache Tomcat or
+WebLogic)
+8. Explain about Configuration Management tool used in Dev-Ops (Chef, Puppet,
+Ansible) and what is the purpose.
+9. Explain about any one code analysis tools (Sonar) and what is the purpose of this tool.
+10. Explain about ELK and what is the purpose of this tool.
+11. Explain about one monitoring tool and purpose of this tool (Nagios).
+12. Explain anyone collaboration tool like “Jira” and what is the purpose of this tool.
+13. Explain about burndown chart?
+14. Explain about Docker and what is the purpose of this tool.
+15. Explain DevOps Metrics and in-depth knowledge of business case creation and
+competitive analysis.
+16. Tell me any one public cloud architecture “AWS or Azure”
+17. What are the benefits and what are the services available in Azure.
+18. Explain in detailed about IAAS, PAAS, & SAAS and how do we use each service in
+the real-time.
+19. How do you present Dev-Ops Matrices, Reports in a dashboard to the client.
+20. Final question As a automation consultant how do you approach the customer to use
+the Dev-Ops for their project and how do they get benefited and advantages.
+Managerial Question
+Tell me about yourself?
+What work you're doing in your company as DevOps Engineer? / What are the Daily task
+you're doing in your job ?
+Tell us something about your present company?
+How many tools you're familiar with? Name them and rate your skills?
+How many projects you covered ? And what are contribution you have done in it?
+Why you're leaving your present company?
+What are the difficulties you faced in your company and how you deal with it?
+What is your company location ? Do you know the hospital near your company ? (Tricky)
+What is your current CTC , what's the deductions and what is your expectation?
+Do you have a PF account ? Can you relocate if required? Do you have a Passport?
