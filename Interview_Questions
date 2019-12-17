@@ -1,8 +1,7 @@
 Jenkins Interview Questions
 What is the system requirements for jenkins server?
-we build a Jenkins master using the m4.large, which comes with 2 vCPUs and 8 GB of
-memory. A general purpose solid-state drive (SSD) EBS volume of 40 GB is provisioned
-and attached to the instance. We're dividing the loads within the jenkins nodes.
+we build a Jenkins master using the m4.large, which comes with 2 vCPUs and 8 GB of memory. A general purpose solid-state drive (SSD) 
+EBS volume of 40 GB is provisioned and attached to the instance. We're dividing the loads within the jenkins nodes.
 What is Continuous Integration?
 What is Jenkins?
 What is the difference between Jenkins, Maven & Ant?
@@ -23,8 +22,8 @@ How to create users in Jenkins?
 How to add/remove/disconnect nodes in Jenkins?
 How to restrict Jenkins job to execute on a particular node?
 Jenkins Backup ?
-A backup ensures that your Jenkins instance can be restored in the event of data corruption or
-loss, or miss-configuration of Jenkins, which leaves it in a usable state.
+A backup ensures that your Jenkins instance can be restored in the event of data corruption or loss, or miss-configuration of Jenkins,
+which leaves it in a usable state.
 you can perform a backup by either taking a snapshot of the entire server or by backing up
 the $JENKINS_HOME directory.
 How to setup multiple Java or Maven or Git versions in Jenkins server?
@@ -36,9 +35,9 @@ What is Nexus repository manager?
 How can you version and upload artefacts in Nexus repo?
 How can you deploy artefact to tomcat server from Jenkins job?
 what is Jenkins Pipeline with Jenkinsfile? Write a sample jenkins file for pipeline?
-Pipeline is basically a plug-in inside jenkins through which we can create a workflow inside
-jenkins. We have to create a job where we can control with the help of jenkinsfile which we
-can have it on code base. We can work it on based of the code revision, It is written on
+Pipeline is basically a plug-in inside jenkins through which we can create a workflow inside jenkins. We have to create a job where we 
+can control with the help of jenkinsfile which we can have it on code base. We can work it on based of the code revision, 
+It is written on
 groovy scripts.
 Sample Jenkinsfile written in groovy
 pipeline {
