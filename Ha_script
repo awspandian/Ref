@@ -1,0 +1,95 @@
+#!/bin/bash
+yum install httpd php php-mysql -y
+cd /var/www/html
+wget https://wordpress.org/wordpress-5.1.1.tar.gz
+tar -xzf wordpress-5.1.1.tar.gz
+cp -r wordpress/* /var/www/html/
+rm -rf wordpress
+rm -rf wordpress-5.1.1.tar.gz
+chmod -R 755 wp-content
+chown -R apache:apache wp-content
+service httpd start
+chkconfig httpd on
+
+
+
+#!/bin/bash
+yum update -y
+yum install httpd -y
+service httpd start
+chkconfig httpd on
+cd /var/www/html
+echo "<html><h1>AZCS Web Server</h1></html>" > index.html
+
+
+
+#!/bin/bash
+yum update -y
+yum install httpd php php-mysql -y
+cd /var/www/html
+echo "healthy" > healthy.html
+wget https://wordpress.org/wordpress-5.1.1.tar.gz
+tar -xzf wordpress-5.1.1.tar.gz
+cp -r wordpress/* /var/www/html/
+rm -rf wordpress
+rm -rf wordpress-5.1.1.tar.gz
+cd /var/www/html
+chmod -R 755 wp-content
+chown -R apache:apache wp-content
+wget https://s3.amazonaws.com/bucketforwordpresslab-donotdelete/htaccess.txt
+mv htaccess.txt .htaccess
+chkconfig httpd on
+service httpd start
+
+
+aws s3 ls
+aws s3 --recursive  /var/ww/html/wp-content/uploads s3://azcs-image-21
+
+aws s3 cp --recursive /var/www/html s3://azcs-code-21
+
+aws s3 ls  s3://azcs-code-21
+
+cat healthy.html
+
+vi /htaccess
+
+aws s3 sync /var/www/html s3://azcs-code-21
+
+cd /etc/httpd/conf
+
+vi httpd.conf  // AlloweOverride none =>to=> AlloweOverride All
+
+service httpd restart
+
+
+s3 azcs-media-21 bucket policy // give the below for public access
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject"
+        ],
+      "Resource": [
+        "arn:aws:s3:::BUCKET_NAME/*"
+        ]
+    }
+  ]
+}
+
+**********************
+cd /etc/
+
+vi crontab  //
+  
+  */1 * * * *  root aws s3 sync --delete /var/www/html s3://azcs-code-21
+ 
+  */1 * * * *  root aws s3 sync --delete /var/www/html/wp-content/uploads  s3://azcs-image-21
+ 
+ 
+ service crond restart
+ 
+ -----------------------
